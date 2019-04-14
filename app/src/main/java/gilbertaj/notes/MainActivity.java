@@ -8,24 +8,40 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private NoteListAdapter noteListAdapter;
+    private ArrayList<String> notesItemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        ListView noteListView = findViewById(R.id.noteListView);
+
+        //Setup the toolbar and fab
+        setSupportActionBar(toolbar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                UpdateList();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
+
+        //Create the adapter from the notes list and then assign it to the ListView
+        notesItemsList = getNoteNameList();
+        noteListAdapter = new NoteListAdapter(getApplicationContext(), notesItemsList);
+        noteListView.setAdapter(noteListAdapter);
     }
 
     @Override
@@ -48,5 +64,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Get the current notes and add them to the List View through it's adapter
+     */
+    private void UpdateList() {
+        //Get the current notes
+        notesItemsList.add("List " + (notesItemsList.size() + 1));
+
+        //Refresh the ListView
+        noteListAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Get a list of the current notes' names
+     * @return ArrayList - "ArrayList of the current notes's names"
+     */
+    private ArrayList<String> getNoteNameList() {
+        //dummy data for now. To be implemented using sqlLite in the future
+        ArrayList<String> itemsList = new ArrayList<>();
+        itemsList.add("First List");
+        itemsList.add("Second List");
+
+        return itemsList;
     }
 }

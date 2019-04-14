@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="action_settings">Settings</string>
+    <string name="noteListItemRenameButtonText">Rename</string>
+    <string name="noteListItemDeleteButtonText">Delete</string>
+    <string name="noteListItemNoteNameDefaultText">List Name</string>
 </resources>
